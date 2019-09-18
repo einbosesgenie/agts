@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Catalog;
+use App\Http\HighlightNews;
 use App\News;
 use App\TypeNews;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +14,6 @@ class NewsController extends Controller
     {
         $news = News::paginate(9);
 
-        $catalogParents = Catalog::where('parent_id', null);
         $newsType = TypeNews::all();
 
         foreach ($news as $new)
@@ -30,41 +29,89 @@ class NewsController extends Controller
         }
 
         return view('news.list', [
-            'news' => $news,
+            'news'     => $news,
             'newsType' => $newsType,
-            'catalogParents' => $catalogParents,
         ]);
     }
 
-    public function getLastNews()
+    public function view($id)
+    {
+        $news = News::where('news.id', '=', $id)
+                    ->leftJoin('type_news', 'type_news.id', '=', 'news.type_id')
+                    ->select('news.*', DB::raw('type_news.title as title_type'))
+                    ->first();
+
+        $similarNewsArray = $this->getSimilarNews($news);
+
+        return view('news.view', [
+            'generalNews' => $news,
+            'news'        => $similarNewsArray,
+        ]);
+    }
+
+    public function getLastNews():HighlightNews
     {
         $newsTitle = 'Последние новости';
-        $news = DB::select('select n.*,
-       tn.title as title_type
-from news n
-inner join type_news tn on tn.id = n.type_id
-order by n.created_at
-limit 3');
+        $newsSql = News::leftJoin('type_news', 'type_news.id', '=', 'news.type_id')
+                       ->select('news.*', DB::raw('type_news.title as title_type'))
+                       ->orderBy('news.created_at')
+                       ->limit(4)
+                       ->get()
+                       ->toArray();
+
+        return new HighlightNews($newsTitle, $this->reductionNews($newsSql));
+    }
+
+    public function getSimilarNews($news):HighlightNews
+    {
+        $arr = explode(' ', trim($news->title))[0];
+
+        $newsSql = News::leftJoin('type_news', 'type_news.id', '=', 'news.type_id')
+                       ->select('news.*', DB::raw('type_news.title as title_type'))
+                       ->where('body', 'like', '%' . $arr . '%')
+                       ->limit(4)
+                       ->get()
+                       ->toArray();
+
+        $title = 'Похожие новости';
+
+        return new HighlightNews($title, $this->reductionNews($newsSql));
+    }
+
+    public function reductionNewsDate($news):string
+    {
+        $dateNews = $news->date;
+
+        $date = new \DateTimeImmutable($dateNews);
+        $year = $date->format('Y');
+        $stringMonth = $this->_getMonthName($date->format('m'));
+        $day = $date->format('d');
+
+        return $day . ' ' . $stringMonth . ' ' . $year;
+    }
+
+    private function reductionNews($news):array
+    {
+        $reductionNews = [];
 
         foreach ($news as $new)
         {
-            $date = new \DateTimeImmutable($new->date);
+            $date = new \DateTimeImmutable($new['date']);
             $year = $date->format('Y');
             $stringMonth = $this->_getMonthName($date->format('m'));
             $day = $date->format('d');
 
             $stringDate = $day . ' ' . $stringMonth . ' ' . $year;
 
-            $new->date = $stringDate;
+            $new['date'] = $stringDate;
+
+            $reductionNews[] = $new;
         }
 
-        return [
-            'news' => $news,
-            'title' => $newsTitle
-        ];
+        return $reductionNews;
     }
 
-    private function _getMonthName($month)
+    private function _getMonthName($month):string
     {
         switch ($month)
         {

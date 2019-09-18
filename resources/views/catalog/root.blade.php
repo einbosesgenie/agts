@@ -20,11 +20,11 @@
                     <div class="tile-grid-item">
                         <div class="tile-grid-item__icon"><img src="{{'/storage/' . $catalogParent['icon']}}"></div>
                         @if(array_key_exists('childs', $catalogParent))
-                        <div class="tile-grid-item__category-name has-children"><a href="/catalog/product/{{$catalogParent['id']}}">{{$catalogParent['display_name']}}</a></div>
+                        <div class="tile-grid-item__category-name has-children"><a href="/catalog/category/{{$catalogParent['id']}}">{{$catalogParent['display_name']}}</a></div>
                             <div class="tile-grid-item__content">
                                 @foreach($catalogParent['childs'] as $catalogChildren)
                                     @if(array_key_exists('childs', $catalogParent))
-                                <div class="tile-grid-item__li"><a href="/catalog/child/{{$catalogChildren['id']}}">{{$catalogChildren['display_name']}}</a></div>
+                                <div class="tile-grid-item__li"><a href="/catalog/category/{{$catalogChildren['id']}}">{{$catalogChildren['display_name']}}</a></div>
                                     @else
                                         <div class="tile-grid-item__li"><a href="/catalog/product/{{$catalogChildren['id']}}">{{$catalogChildren['display_name']}}</a></div>
                                     @endif
