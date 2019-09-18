@@ -24,9 +24,8 @@
                 <div class="footer__contacts"><a class="footer-contacts__phone"
                                                  href="tel:{{setting('site.telephone')}}">{{setting('site.telephone')}}</a><a
                             class="footer-contacts__mail"
-                            href="mailto:info@company.com">info@company.com</a>
-                    <div class="footer-contacts__address">125445, Россия, г. Москва, <br>ул. Смольная, д. 24/А, офис
-                        1420
+                            href="mailto:{{setting('site.company_mail')}}">{{setting('site.company_mail')}}</a>
+                    <div class="footer-contacts__address">{!! setting('site.company_address') !!}
                     </div>
                 </div>
             </div>
@@ -34,7 +33,8 @@
         <hr>
         <div class="footer__cred">
             <div class="footer__copy">© AGT 2010–{{(new DateTime())->format('Y')}}. Все права защищены</div>
-            <div class="footer__conf"><a href="#">Политика конфиденциальности</a></div>
+            <div class="footer__conf"><a href="/agreement">Политика конфиденциальности</a></div>
         </div>
     </div>
 </footer>
+<script type="text/javascript" src="/js/build.js"></script></body>

@@ -49,7 +49,7 @@
             @foreach($newsType as $newType)
                 @foreach($news as $new)
                     @if((int)$new->type_id === 2 && (int)$newType->id === 2)
-                        <div class="news__item f-world"><a class="n-grid__item" href="#"
+                        <div class="news__item f-world"><a class="n-grid__item" href="/news/view/{{$new->id}}"
                                                            style="background-image:url({{ Voyager::image($new->title_images)}})">
                                 <div class="n-grid__content">
                                     <div class="n-grid__sup">{{$new->date}} | {{$newType->title}}</div>
@@ -59,7 +59,7 @@
                             </a></div>
                     @endif
                     @if((int)$new->type_id === 1 && (int)$newType->id === 1)
-                        <div class="news__item f-company"><a class="n-grid__item" href="#"
+                        <div class="news__item f-company"><a class="n-grid__item" href="/news/view/{{$new->id}}"
                                                              style="background-image:url({{ Voyager::image($new->title_images)}});">
                                 <div class="n-grid__content">
                                     <div class="n-grid__sup">{{$new->date}} | {{$newType->title}}</div>
@@ -69,7 +69,7 @@
                             </a></div>
                     @endif
                     @if((int)$new->type_id === 3 && (int)$newType->id === 3)
-                        <div class="news__item f-new"><a class="n-grid__item" href="#"
+                        <div class="news__item f-new"><a class="n-grid__item" href="/news/view/{{$new->id}}"
                                                          style="background-image:url({{ Voyager::image($new->title_images)}});">
                                 <div class="n-grid__content">
                                     <div class="n-grid__sup">{{$new->date}} | {{$newType->title}}</div>
@@ -79,7 +79,7 @@
                             </a></div>
                     @endif
                     @if((int)$new->type_id === 4 && (int)$newType->id === 4)
-                        <div class="news__item f-events"><a class="n-grid__item" href="#"
+                        <div class="news__item f-events"><a class="n-grid__item" href="/news/view/{{$new->id}}"
                                                             style="background-image:url({{ Voyager::image($new->title_images)}});">
                                 <div class="n-grid__content">
                                     <div class="n-grid__sup">{{$new->date}} | {{$newType->title}}</div>

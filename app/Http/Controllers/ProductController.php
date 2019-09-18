@@ -11,12 +11,34 @@ class ProductController extends Controller
     {
         $catalogModel = Catalog::all()->toArray();
         $catsId = $this->_getCatsId($catalogModel, $id);
+        $catalogType = Catalog::whereId($id)->first();
 
-        $catsId = !$catsId ? $id : rtrim($catsId,',');
+        $catsId = !$catsId ? [$id] : explode(',', $catsId . $id);
 
-        $products = Product::whereIn('catalog_id',$catsId)->get();
-        dd($products);
+        $products = Product::leftJoin('manufacturers', 'products.manufacturers_id', '=', 'manufacturers.id')
+                           ->whereIn('catalog_id', $catsId)->paginate(6);
 
+        return view('product.list', [
+            'products' => $products,
+            'catalogType' => $catalogType->display_name
+        ]);
+    }
+
+    public function viewCategory($id)
+    {
+        $catalogModel = Catalog::all()->toArray();
+        $catsId = $this->_getCatsId($catalogModel, $id);
+        $catalogType = Catalog::whereId($id)->first();
+
+        $catsId = !$catsId ? [$id] : explode(',', $catsId . $id);
+
+        $products = Product::leftJoin('manufacturers', 'products.manufacturers_id', '=', 'manufacturers.id')
+                           ->whereIn('catalog_id', $catsId)->paginate(6);
+
+        return view('product.category', [
+            'products' => $products,
+            'catalogType' => $catalogType->display_name
+        ]);
     }
 
     private function _getCatsId($array, $id)
