@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Catalog;
+use App\Manufacturer;
 use App\Product;
 
 class ProductController extends Controller
@@ -38,6 +39,21 @@ class ProductController extends Controller
         return view('product.category', [
             'products' => $products,
             'catalogType' => $catalogType->display_name
+        ]);
+    }
+
+    public function viewProduct($id)
+    {
+
+        $product = Product::whereId($id)->first()->toArray();
+
+        $manufacturer = Manufacturer::whereId($product['manufacturers_id'])->first()->toArray();
+
+        $news = (new NewsController())->getInterestingNews();
+
+        return view('product.view', [
+            'news'         => $news,
+            'manufacturer' => $manufacturer,
         ]);
     }
 

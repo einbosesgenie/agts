@@ -43,13 +43,19 @@ class NewsController extends Controller
 
         $similarNewsArray = $this->getSimilarNews($news);
 
+        if (!$similarNewsArray->news)
+        {
+            $lastNews = $this->getLastNews();
+            $similarNewsArray->news = $lastNews->news;
+        }
+
         return view('news.view', [
             'generalNews' => $news,
             'news'        => $similarNewsArray,
         ]);
     }
 
-    public function getLastNews():HighlightNews
+    public function getLastNews(): HighlightNews
     {
         $newsTitle = 'Последние новости';
         $newsSql = News::leftJoin('type_news', 'type_news.id', '=', 'news.type_id')
@@ -62,7 +68,7 @@ class NewsController extends Controller
         return new HighlightNews($newsTitle, $this->reductionNews($newsSql));
     }
 
-    public function getSimilarNews($news):HighlightNews
+    public function getSimilarNews($news): HighlightNews
     {
         $arr = explode(' ', trim($news->title))[0];
 
@@ -78,7 +84,30 @@ class NewsController extends Controller
         return new HighlightNews($title, $this->reductionNews($newsSql));
     }
 
-    public function reductionNewsDate($news):string
+    public function getInterestingNews()
+    {
+        $title = 'Интересные новости';
+
+        $newsSql = News::leftJoin('type_news', 'type_news.id', '=', 'news.type_id')
+                       ->select('news.*', DB::raw('type_news.title as title_type'))
+                       ->orderBy('created_at')
+                       ->limit(4)
+                       ->get()
+                       ->toArray();
+
+        $newsKeysRand = array_rand($newsSql, 4);
+
+        $news = [];
+
+        foreach ($newsKeysRand as $newsKeyRand)
+        {
+            $news[] = $newsSql[$newsKeyRand];
+        }
+
+        return new HighlightNews($title, $this->reductionNews($news));
+    }
+
+    public function reductionNewsDate($news): string
     {
         $dateNews = $news->date;
 
@@ -90,13 +119,13 @@ class NewsController extends Controller
         return $day . ' ' . $stringMonth . ' ' . $year;
     }
 
-    private function reductionNews($news):array
+    private function reductionNews($news): array
     {
         $reductionNews = [];
 
         foreach ($news as $new)
         {
-            $date = new \DateTimeImmutable($new['date']);
+            $date = new \DateTime($new['date']);
             $year = $date->format('Y');
             $stringMonth = $this->_getMonthName($date->format('m'));
             $day = $date->format('d');
@@ -111,7 +140,7 @@ class NewsController extends Controller
         return $reductionNews;
     }
 
-    private function _getMonthName($month):string
+    private function _getMonthName($month): string
     {
         switch ($month)
         {
