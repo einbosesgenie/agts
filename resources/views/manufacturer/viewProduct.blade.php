@@ -27,7 +27,7 @@
                 <h2>Продукция компании</h2>
                 <div class="grid">
                     @foreach($products as $product)
-                        <div class="grid-item c-product"><a class="grid-item__content" href="#">
+                        <div class="grid-item c-product"><a class="grid-item__content" href="/catalog/product/view/{{$product->id}}">
                                 <div class="c-product__img grid-item__img"><img src="{{'/storage/' . $product->img}}" alt="{{$product->name}}"></div>
                                 <div class="c-product__text">
                                     <div class="c-product__sup">{{$manufacturer->title}}</div>

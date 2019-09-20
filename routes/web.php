@@ -27,6 +27,7 @@ Route::get('/catalog', 'CatalogController@index');
 Route::get('/catalog/category/{id}', 'CatalogController@viewCategory');
 
 Route::get('/catalog/product/{id}', 'ProductController@index');
+Route::get('/catalog/product/view/{id}', 'ProductController@viewProduct');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
