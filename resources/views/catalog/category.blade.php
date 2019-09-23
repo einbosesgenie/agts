@@ -5,7 +5,11 @@
         <div class="container-fluid no-gap">
             <div class="breadcrumbs-row">
                 <div class="container">
-                    <div class="breadcrumbs"><span><a href="#">Главная</a></span><span><a href="#">Каталог</a></span><span><a href="#">Геофизика</a></span>
+                    <div class="breadcrumbs"><span><a href="/">Главная</a></span>
+                        <span><a href="/catalog">Каталог</a></span>
+                        @foreach($breadcrumbs as $breadcrumb)
+                        <span><a href="/catalog/category/{{$breadcrumb['id']}}">{{ $breadcrumb['display_name'] }}</a></span>
+                            @endforeach
                     </div>
                 </div>
             </div>

@@ -23,9 +23,11 @@ class CatalogController extends Controller
         $catalogs = Catalog::all()->toArray();
 
         $catalogsTree = $this->levelTree($catalogs, $id);
+        $breadcrumbs = $this->_getBreadcrumb($catalogs, $id);
 
         return view('catalog.category', [
-            'catalogTree' => $catalogsTree
+            'catalogTree' => $catalogsTree,
+            'breadcrumbs' => array_reverse($breadcrumbs, true)
         ]);
     }
 
@@ -84,6 +86,42 @@ class CatalogController extends Controller
             {
                 $data .= $item['id'] . ',';
                 $data .= $this->getCutsId($catalogsModel, $item['id']);
+            }
+        }
+
+        return $data;
+    }
+
+    public function _getBreadcrumb($catalogsModel, $id)
+    {
+        if(!$id)
+        {
+            return false;
+        }
+
+        $data = [];
+        $result = [];
+
+        foreach ($catalogsModel as $catalog)
+        {
+            $result[$catalog['id']] = $catalog;
+        }
+
+        $count = count($result);
+
+        for ($i = 0; $i < $count; $i++)
+        {
+            if ($id !== null)
+            {
+                if ($result[$id])
+                {
+                    $data[$result[$id]['id']] = $result[$id];
+                    $id = $result[$id]['parent_id'];
+                }
+            }
+            else
+            {
+                break;
             }
         }
 
