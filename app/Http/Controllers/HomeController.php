@@ -4,12 +4,35 @@
 namespace App\Http\Controllers;
 
 use App\Catalog;
+use App\Manufacturer;
+use App\News;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     public function index()
     {
         $catalogs = Catalog::all()->toArray();
+        $newsSql = News::leftJoin('type_news', 'type_news.id', '=', 'news.type_id')
+                       ->select('news.*', DB::raw('type_news.title as title_type'))
+                       ->orderBy('news.created_at')
+                       ->limit(6)
+                       ->get()
+                       ->toArray();
+
+        $manufacturerSql = Manufacturer::limit(12)->get()->toArray();
+
+        $manufacturer = array_chunk($manufacturerSql, 6);
+
+        $manufacturerFirst = array_shift($manufacturer);
+
+        $manufacturerSecond = $manufacturer[0];
+
+        $news = array_chunk($newsSql, 3);
+
+        $newsFirst = array_shift($news);
+
+        $newsSecond = $news[0];
 
         $result = [];
 
@@ -19,13 +42,15 @@ class HomeController extends Controller
         }
 
         return view('index', [
-            'catalogsTree' => $this->mapTree($result)
+            'catalogTree'        => $this->mapTree($result),
+            'newsFirst'          => $newsFirst,
+            'newsSecond'         => $newsSecond,
+            'manufacturerFirst'  => $manufacturerFirst,
+            'manufacturerSecond' => $manufacturerSecond,
         ]);
-
-        echo $this->breadcrumbs($result, 4);
     }
 
-    private function mapTree($catalogs):array
+    private function mapTree($catalogs): array
     {
         $tree = [];
 

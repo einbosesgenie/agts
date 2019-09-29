@@ -24,6 +24,7 @@
                         <div class="manufacturer-info__link"><a href="{{$manufacturer->url}}">{{$manufacturer->display_url ?? 'Ссылка на компанию'}}</a></div>
                     </div>
                 </div>
+                @if(count($products) > 0)
                 <h2>Продукция компании</h2>
                 <div class="grid">
                     @foreach($products as $product)
@@ -33,10 +34,14 @@
                                     <div class="c-product__sup">{{$manufacturer->title}}</div>
                                     <div class="c-product__title">{{$product->name}}</div>
                                     <div class="grid-item__link">Подробнее</div>
-                                </div></a></div>
+                                </div></a>
+                        </div>
                     @endforeach
                 </div>
                 {{$products->links('layout.pagination')}}
+                    @else
+                <h2>У данной компании нет продукции</h2>
+                    @endif
             </div>
         </div>
     </main>

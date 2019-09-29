@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Catalog;
+use App\Product;
 
 class CatalogController extends Controller
 {
@@ -22,12 +23,19 @@ class CatalogController extends Controller
     {
         $catalogs = Catalog::all()->toArray();
 
-        $catalogsTree = $this->levelTree($catalogs, $id);
+        $catsId = $this->getCutsId($catalogs, $id);
+        $catsId = !$catsId ? [$id] : explode(',', $catsId . $id);
+
+        $products = (new ProductController())->getProductsForCast($catsId);
+
+        $catalogsTree = $this->levelTree($id, $catsId);
+
         $breadcrumbs = $this->_getBreadcrumb($catalogs, $id);
 
         return view('catalog.category', [
             'catalogTree' => $catalogsTree,
-            'breadcrumbs' => array_reverse($breadcrumbs, true)
+            'breadcrumbs' => array_reverse($breadcrumbs, true),
+            'products'    => $products
         ]);
     }
 
@@ -61,11 +69,8 @@ class CatalogController extends Controller
         return $tree;
     }
 
-    public function levelTree($catalogsModel, $id)
+    public function levelTree($id, $catsId)
     {
-        $catsId = $this->getCutsId($catalogsModel, $id);
-        $catsId = !$catsId ? [$id] : explode(',', $catsId . $id);
-
         $catalogsModel = Catalog::whereIn('id', $catsId)->get()->toArray();
 
         return $this->mapTree($catalogsModel, $id);
@@ -79,13 +84,19 @@ class CatalogController extends Controller
         }
 
         $data = '';
+        $result = [];
 
-        foreach ($catalogsModel as $item)
+        foreach ($catalogsModel as $catalog)
+        {
+            $result[$catalog['id']] = $catalog;
+        }
+
+        foreach ($result as $item)
         {
             if ($item['parent_id'] === (int)$id)
             {
                 $data .= $item['id'] . ',';
-                $data .= $this->getCutsId($catalogsModel, $item['id']);
+                $data .= $this->getCutsId($result, $item['id']);
             }
         }
 

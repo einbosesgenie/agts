@@ -3,10 +3,11 @@
         <div class="footer__grid">
             <div class="footer__grid-item">
                 <div class="footer-gi__title">Компания:</div>
-                <div class="footer-gi__content"><a class="footer-gi" href="/about">О компании</a><a class="footer-gi"
-                                                                                                    href="/news">Новости</a><a
-                            class="footer-gi" href="#">Справочники и инструкции</a><a class="footer-gi"
-                                                                                      href="/manufacturer">Производители</a>
+                <div class="footer-gi__content">
+                    <a class="footer-gi" href="/about">О компании</a>
+                    <a class="footer-gi" href="/news">Новости</a>
+                    <a class="footer-gi" href="#">Справочники и инструкции</a>
+                    <a class="footer-gi" href="/manufacturer">Производители</a>
                 </div>
             </div>
             <div class="footer__grid-item">
@@ -14,7 +15,7 @@
                 <div class="footer-gi__content footer-gi__content--two-columns">
                     @foreach($catalogParents as $catalogParent)
                         @if(!$catalogParent['parent_id'])
-                    <a class="footer-gi" href="#">{{$catalogParent['display_name']}}</a>
+                    <a class="footer-gi" href="/catalog/category/{{$catalogParent['id']}}">{{$catalogParent['display_name']}}</a>
                         @endif
                         @endforeach
                 </div>

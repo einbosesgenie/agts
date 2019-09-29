@@ -12,7 +12,10 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $news = News::paginate(9);
+        $news = News::leftJoin('type_news', 'type_news.id', '=', 'news.type_id')
+                    ->select('news.*', DB::raw('type_news.title as title_type'))
+                    ->orderBy('news.created_at')
+                    ->paginate(9);
 
         $newsType = TypeNews::all();
 
@@ -31,6 +34,26 @@ class NewsController extends Controller
         return view('news.list', [
             'news'     => $news,
             'newsType' => $newsType,
+        ]);
+    }
+
+    public function typeView($id)
+    {
+        if (!$id)
+        {
+            return false;
+        }
+
+        $typeNews = TypeNews::whereId($id)->first();
+
+        $news = News::where('news.type_id','=', $id)
+                    ->leftJoin('type_news', 'type_news.id', '=', 'news.type_id')
+                    ->select('news.*', DB::raw('type_news.title as title_type'))
+                    ->paginate(9);
+
+        return view('news.viewType', [
+            'news'     => $news,
+            'typeNews' => $typeNews,
         ]);
     }
 
@@ -110,6 +133,18 @@ class NewsController extends Controller
     public function reductionNewsDate($news): string
     {
         $dateNews = $news->date;
+
+        $date = new \DateTimeImmutable($dateNews);
+        $year = $date->format('Y');
+        $stringMonth = $this->_getMonthName($date->format('m'));
+        $day = $date->format('d');
+
+        return $day . ' ' . $stringMonth . ' ' . $year;
+    }
+
+    public function reductionNewsDateArray($news): string
+    {
+        $dateNews = $news['date'];
 
         $date = new \DateTimeImmutable($dateNews);
         $year = $date->format('Y');

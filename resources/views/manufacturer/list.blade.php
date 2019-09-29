@@ -5,7 +5,7 @@
         <div class="container-fluid no-gap">
             <div class="breadcrumbs-row">
                 <div class="container">
-                    <div class="breadcrumbs"><span><a href="#">Главная</a></span><span><a href="#">Производители</a></span>
+                    <div class="breadcrumbs"><span><a href="/">Главная</a></span><span><a href="/manufacturer">Производители</a></span>
                     </div>
                 </div>
             </div>

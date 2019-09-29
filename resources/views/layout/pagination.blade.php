@@ -1,5 +1,5 @@
-@if ($paginator->hasPages())
-    <div class="pagination">
+ <div class="pagination">
+     @if ($paginator->hasPages())
         <div>
             <div class="pagination__row">
                 @if ($paginator->onFirstPage())
@@ -36,5 +36,5 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
-@endif
