@@ -19,5 +19,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/agts</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="agtSys" uuid="8466ee08-b169-44d7-b447-315302a01d8d">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/agts</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -1,5 +1,7 @@
 @extends('layout.layout')
 
+@section('title','Справочники')
+
 @section('content')
     <main class="main">
         <div class="container-fluid no-gap">

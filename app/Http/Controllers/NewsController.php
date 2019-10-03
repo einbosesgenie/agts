@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 
 use App\Http\HighlightNews;
 use App\News;
+use App\SubscribeMail;
 use App\TypeNews;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
@@ -31,6 +33,13 @@ class NewsController extends Controller
             $new->date = $stringDate;
         }
 
+        if (request('page') && request('ajax') === 'true')
+        {
+            return view('news.grid',[
+                'news' => $news
+            ]);
+        }
+
         return view('news.list', [
             'news'     => $news,
             'newsType' => $newsType,
@@ -50,6 +59,13 @@ class NewsController extends Controller
                     ->leftJoin('type_news', 'type_news.id', '=', 'news.type_id')
                     ->select('news.*', DB::raw('type_news.title as title_type'))
                     ->paginate(9);
+
+        if (request('page') && request('ajax') === 'true')
+        {
+            return view('news.grid',[
+                'news' => $news
+            ]);
+        }
 
         return view('news.viewType', [
             'news'     => $news,
@@ -206,5 +222,16 @@ class NewsController extends Controller
             default:
                 return 'Не верно указан месяц';
         }
+    }
+
+    public function subscribeSave(Request $request)
+    {
+        $data = $request->all();
+
+        $feedback = new SubscribeMail();
+
+        $feedback->mail = $data['email'];
+
+        $feedback->save();
     }
 }

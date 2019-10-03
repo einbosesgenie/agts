@@ -26,11 +26,20 @@ class CatalogController extends Controller
         $catsId = $this->getCutsId($catalogs, $id);
         $catsId = !$catsId ? [$id] : explode(',', $catsId . $id);
 
-        $products = (new ProductController())->getProductsForCast($catsId);
+        $products = Product::leftJoin('manufacturers', 'products.manufacturers_id', '=', 'manufacturers.id')
+                           ->select('products.*', 'manufacturers.title')
+                           ->whereIn('catalog_id', $catsId)->paginate(6);
 
         $catalogsTree = $this->levelTree($id, $catsId);
 
         $breadcrumbs = $this->_getBreadcrumb($catalogs, $id);
+
+        if (request('page') && request('ajax') === 'true')
+        {
+            return view('catalog.grid',[
+                'products' => $products
+            ]);
+        }
 
         return view('catalog.category', [
             'catalogTree' => $catalogsTree,

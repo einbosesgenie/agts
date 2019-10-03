@@ -1,5 +1,7 @@
 @extends('layout.layout')
 
+@section('title','Контакты')
+
 @section('content')
 <div class="modal--bg"></div>
 <div class="modal modal--feedback">

@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/css/build.css" rel="stylesheet"></head>
-    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
 <body>
 <header class="header">
     <div class="container">
@@ -78,7 +78,7 @@
                     <div class="nav__li"><a href="/about">О компании</a></div>
                     <div class="nav__li"><a href="/news">Новости</a></div>
                     <div class="nav__li"><a href="/manufacturer">Производители</a></div>
-                    <div class="nav__li"><a href="#">Справочники и инструкции</a></div>
+                    <div class="nav__li"><a href="/handbooks">Справочники и инструкции</a></div>
                     <div class="nav__li"><a href="/contact">Контакты</a></div>
                 </div>
             </div>

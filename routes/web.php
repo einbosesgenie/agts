@@ -29,12 +29,19 @@ Route::get('/catalog/category/{id}', 'CatalogController@viewCategory');
 
 Route::get('/catalog/product/{id}', 'ProductController@index');
 Route::get('/catalog/product/view/{id}', 'ProductController@viewProduct');
+Route::get('/search', 'ProductController@search');
 
 Route::get('/contact', 'ContactController@index');
 Route::get('/contact/indexView/{id}', 'ContactController@indexView');
 
 Route::get('/contact/feedback', 'ContactController@feedback');
-Route::post('/contacts/feedbackSave', 'ContactController@save');
+
+Route::post('feedback/add', 'ContactController@save');
+Route::post('subscribe/add', 'NewsController@subscribeSave');
+
+Route::get('/handbooks', 'HandbooksController@index');
+Route::get('/handbooks/filter', 'HandbooksController@filter');
+
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

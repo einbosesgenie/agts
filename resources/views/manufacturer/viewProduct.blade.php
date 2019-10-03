@@ -1,5 +1,7 @@
 @extends('layout.layout')
 
+@section('title', $manufacturer->title)
+
 @section('content')
     <main class="main">
         <div class="container-fluid no-gap">

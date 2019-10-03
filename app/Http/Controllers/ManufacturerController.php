@@ -10,7 +10,16 @@ class ManufacturerController extends Controller
 {
     public function index()
     {
-        $manufacturers = Manufacturer::paginate(9);
+        $paginate = 12;
+
+        $manufacturers = Manufacturer::paginate($paginate);
+
+        if (request('page') && request('ajax') === 'true')
+        {
+            return view('manufacturer.grid',[
+                'manufacturers' => $manufacturers
+            ]);
+        }
 
         return view('manufacturer.list', [
             'manufacturers' => $manufacturers

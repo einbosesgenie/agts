@@ -1,5 +1,7 @@
 @extends('layout.layout')
 
+@section('title','Обратная связь')
+
 @section('content')
 <div class="modal--bg"></div>
 <div class="modal modal--feedback">
@@ -58,7 +60,7 @@
     <div class="feedback">
         <div class="container">
             <p>С помощью этой формы вы можете написать нам письмо: задать вопрос по интересующей вас теме или конкретному прибору, узнать про особенности юридического и бухгалтерского оформления сотрудничества, запросить консультацию по продукции.Все поля обязательны для заполнения.</p>
-            <form class="feedback-form" action="/contacts/feedbackSave">
+            <form class="feedback-form" action="feedback/add">
                 <input name="company" type="text" placeholder="Компания">
                 <input name="contact" type="text" placeholder="Контактное лицо">
                 <input name="email" type="email" placeholder="Ваш E-mail">

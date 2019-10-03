@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\Feedback;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -57,9 +58,16 @@ class ContactController extends Controller
 
     public function save(Request $request)
     {
-        $data = $request->input();
+        $data = $request->all();
 
-        var_dump($_POST);
-       return redirect('/contact/feedback');
+        $feedback = new Feedback();
+
+        $feedback->company = $data['company'];
+        $feedback->contact = $data['contact'];
+        $feedback->email = $data['email'];
+        $feedback->message = $data['message'];
+        $feedback->agreement = $data['agreement'];
+
+        $feedback->save();
     }
 }
