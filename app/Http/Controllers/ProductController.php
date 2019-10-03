@@ -43,6 +43,13 @@ class ProductController extends Controller
 
         unset($breadcrumbs[$breadcrumbsEnd['id']]);
 
+        if (request('page') && request('ajax') === 'true')
+        {
+            return view('product.grid',[
+                'products' => $products
+            ]);
+        }
+
         return view('product.list', [
             'products'       => $products,
             'catalogType'    => $catalogType->display_name,
@@ -151,6 +158,12 @@ class ProductController extends Controller
         $products = Product::leftJoin('manufacturers', 'products.manufacturers_id', '=', 'manufacturers.id')
                            ->whereRaw('lower(name) like (?)',["%{$dataSearch}%"])->paginate(6);
 
+        if (request('page') && request('ajax') === 'true')
+        {
+            return view('product.grid',[
+                'products' => $products
+            ]);
+        }
 
         return view('product.search', ['products' => $products]);
 

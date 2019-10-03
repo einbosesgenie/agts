@@ -22,41 +22,31 @@ class HandbooksController extends Controller
                             ->select('instructions.*', DB::raw('products.name as products_name'))
                             ->paginate(10);
 
-
-        foreach ($files as $file)
-        {
-            $filename = json_decode($file->file, true)[0]['original_name'];
-            $filePath = json_decode($file->file, true)[0]['download_link'];
-
-            $file['expansion'] = pathinfo($filename, PATHINFO_EXTENSION);
-            $file['size'] = $this->FBytes(Storage::size('/storage/' . $filePath));
-            $file['link'] = $filePath;
-        }
-
-        $industrialFilter = IndustrialFilter::orderBy('created_at')->get();
-        $lineProductFilter = LineProductsFilter::orderBy('created_at')->get();
-        $resourceTypeFilter = ResourceTypeFilter::orderBy('created_at')->get();
-
-        return view('handbooks.list', [
-            'files'              => $files,
-            'industrialFilter'   => $industrialFilter,
-            'lineProductFilter'  => $lineProductFilter,
-            'resourceTypeFilter' => $resourceTypeFilter,
-        ]);
-    }
-
-    public function filter()
-    {
         if (empty(trim(request('category'), '[]'))
             && empty(trim(request('industry'), '[]'))
-            && empty(trim(request('type'), '[]')))
+            && empty(trim(request('type'), '[]'))
+            && request('ajax') === 'true')
         {
             $files = Instruction::leftJoin('products', 'products.id', '=', 'instructions.products_id')
                                 ->select('instructions.*', DB::raw('products.name as products_name'))
                                 ->paginate(10);
 
+            foreach ($files as $file)
+            {
+                $filename = json_decode($file->file, true)[0]['original_name'];
+                $filePath = json_decode($file->file, true)[0]['download_link'];
+
+                $file['expansion'] = pathinfo($filename, PATHINFO_EXTENSION);
+                $file['size'] = $this->FBytes(Storage::size('/storage/' . $filePath));
+                $file['link'] = $filePath;
+            }
+
+            return view('handbooks.fileWrap', ['files' => $files]);
+
         }
-        else
+        elseif(!empty(trim(request('category'), '[]'))
+            || !empty(trim(request('industry'), '[]'))
+            || !empty(trim(request('type'), '[]')))
         {
             $category = [];
             $industry = [];
@@ -143,6 +133,17 @@ class HandbooksController extends Controller
                                     ->paginate(10);
             }
 
+            foreach ($files as $file)
+            {
+                $filename = json_decode($file->file, true)[0]['original_name'];
+                $filePath = json_decode($file->file, true)[0]['download_link'];
+
+                $file['expansion'] = pathinfo($filename, PATHINFO_EXTENSION);
+                $file['size'] = $this->FBytes(Storage::size('/storage/' . $filePath));
+                $file['link'] = $filePath;
+            }
+
+            return view('handbooks.fileWrap', ['files' => $files]);
         }
 
 
@@ -156,9 +157,21 @@ class HandbooksController extends Controller
             $file['link'] = $filePath;
         }
 
-        return view('handbooks.fileWrap', ['files' => $files]);
+        if (request('page') && request('ajax') === 'true')
+        {
+            return view('handbooks.fileWrap', ['files' => $files]);
+        }
 
+        $industrialFilter = IndustrialFilter::orderBy('created_at')->get();
+        $lineProductFilter = LineProductsFilter::orderBy('created_at')->get();
+        $resourceTypeFilter = ResourceTypeFilter::orderBy('created_at')->get();
 
+        return view('handbooks.list', [
+            'files'              => $files,
+            'industrialFilter'   => $industrialFilter,
+            'lineProductFilter'  => $lineProductFilter,
+            'resourceTypeFilter' => $resourceTypeFilter,
+        ]);
     }
 
     private function FBytes($bytes, $precision = 2)

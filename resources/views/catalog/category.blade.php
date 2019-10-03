@@ -42,7 +42,9 @@
         @endforeach
         <div class="catalog-products catalog-products--in-category">
             <div class="container">
+                <div class="grid">
                 @include('catalog.grid')
+                </div>
                  {{$products->links('layout.pagination')}}
             </div>
         </div>

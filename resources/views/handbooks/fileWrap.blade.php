@@ -1,4 +1,4 @@
-<div class="files-wrapper">
+
     @foreach($files as $file)
         @if($file->expansion === 'pdf')
             <div class="files"><a class="file" href="http://agts/storage/{{$file->link}}"
@@ -32,7 +32,5 @@
                                 @endif
                                 @endforeach
                             </div>
-                            {{$files->links('layout.pagination')}}
                     </div>
             </div>
-</div>

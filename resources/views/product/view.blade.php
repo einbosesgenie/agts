@@ -102,6 +102,72 @@
             <div class="product-card__recomendations">
                 <div class="container">
                     <div class="pc-recomendation__title">Рекомендуем</div>
+                    <div class="light-swiper product-card__recomendations-slider">
+                        <div class="swiper-wrap swiper__tiles">
+                            <div class="swipe-item">
+                                <div class="grid-item c-product"><a class="grid-item__content" href="#">
+                                        <div class="c-product__img grid-item__img"><img src="/assets/img/catalog-product.png" alt="Измерители магниной восприимчивости KT-10 Plus S/C "></div>
+                                        <div class="c-product__text">
+                                            <div class="c-product__sup">TerraPlus</div>
+                                            <div class="c-product__title">Измерители магниной восприимчивости KT-10 Plus S/C</div>
+                                            <div class="grid-item__link">Подробнее</div>
+                                        </div></a></div>
+                            </div>
+                            <div class="swipe-item">
+                                <div class="grid-item c-product"><a class="grid-item__content" href="#">
+                                        <div class="c-product__img grid-item__img"><img src="/assets/img/catalog-product.png" alt="Измерители магниной восприимчивости KT-10 Plus S/C "></div>
+                                        <div class="c-product__text">
+                                            <div class="c-product__sup">TerraPlus</div>
+                                            <div class="c-product__title">Измерители магниной восприимчивости KT-10 Plus S/C</div>
+                                            <div class="grid-item__link">Подробнее</div>
+                                        </div></a></div>
+                            </div>
+                            <div class="swipe-item">
+                                <div class="grid-item c-product"><a class="grid-item__content" href="#">
+                                        <div class="c-product__img grid-item__img"><img src="/assets/img/catalog-product.png" alt="Измерители магниной восприимчивости KT-10 Plus S/C "></div>
+                                        <div class="c-product__text">
+                                            <div class="c-product__sup">TerraPlus</div>
+                                            <div class="c-product__title">Измерители магниной восприимчивости KT-10 Plus S/C</div>
+                                            <div class="grid-item__link">Подробнее</div>
+                                        </div></a></div>
+                            </div>
+                        </div>
+                        <div class="dot-wrap">
+                            <div class="dot"><span class="active"></span></div>
+                            <div class="dot"><span></span></div>
+                            <div class="dot"><span></span></div>
+                        </div>
+                    </div>
+                    <div class="grid product-card__recomendations-grid">
+                        <div class="grid-item c-product"><a class="grid-item__content" href="#">
+                                <div class="c-product__img grid-item__img"><img src="/assets/img/catalog-product.png" alt="Измерители магниной восприимчивости KT-10 Plus S/C "></div>
+                                <div class="c-product__text">
+                                    <div class="c-product__sup">TerraPlus</div>
+                                    <div class="c-product__title">Измерители магниной восприимчивости KT-10 Plus S/C</div>
+                                    <div class="grid-item__link">Подробнее</div>
+                                </div></a></div>
+                        <div class="grid-item c-product"><a class="grid-item__content" href="#">
+                                <div class="c-product__img grid-item__img"><img src="/assets/img/catalog-product.png" alt="Измерители магниной восприимчивости KT-10 Plus S/C "></div>
+                                <div class="c-product__text">
+                                    <div class="c-product__sup">TerraPlus</div>
+                                    <div class="c-product__title">Измерители магниной восприимчивости KT-10 Plus S/C</div>
+                                    <div class="grid-item__link">Подробнее</div>
+                                </div></a></div>
+                        <div class="grid-item c-product"><a class="grid-item__content" href="#">
+                                <div class="c-product__img grid-item__img"><img src="/assets/img/catalog-product.png" alt="Измерители магниной восприимчивости KT-10 Plus S/C "></div>
+                                <div class="c-product__text">
+                                    <div class="c-product__sup">TerraPlus</div>
+                                    <div class="c-product__title">Измерители магниной восприимчивости KT-10 Plus S/C</div>
+                                    <div class="grid-item__link">Подробнее</div>
+                                </div></a></div>
+                        <div class="grid-item c-product"><a class="grid-item__content" href="#">
+                                <div class="c-product__img grid-item__img"><img src="/assets/img/catalog-product.png" alt="Измерители магниной восприимчивости KT-10 Plus S/C "></div>
+                                <div class="c-product__text">
+                                    <div class="c-product__sup">TerraPlus</div>
+                                    <div class="c-product__title">Измерители магниной восприимчивости KT-10 Plus S/C</div>
+                                    <div class="grid-item__link">Подробнее</div>
+                                </div></a></div>
+                    </div>
                 </div>
             </div>
         </div>

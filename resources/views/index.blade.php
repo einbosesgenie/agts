@@ -19,7 +19,7 @@
             </div>
             <div class="hero__bg"></div>
         </div>
-        <div class="catalog-category tile-grid__wrapper">
+        <div class="catalog-index catalog-category tile-grid__wrapper">
             <div class="container">
                 <div class="tile-grid">
                     @foreach($catalogTree as $catalogParent)

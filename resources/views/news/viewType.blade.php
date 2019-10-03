@@ -41,7 +41,9 @@
             </div>
         </div>
         <div class="container no-gap">
-            @include('news.grid')
+            <div class="news__grid">
+                @include('news.grid')
+            </div>
             <div>
                 {{$news->links('layout.pagination')}}
             </div>
